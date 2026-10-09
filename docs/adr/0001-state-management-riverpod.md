@@ -1,18 +1,18 @@
-# 0001. 狀態管理採用 Riverpod
+# 0001. State management with Riverpod
 
-- 狀態：採用
-- 日期：2026-10-09
+- Status: Accepted
+- Date: 2026-10-09
 
-## 背景
+## Context
 
-購物車需要跨頁共享（App Bar 件數、購物車頁、結帳頁），商品資料需要處理載入中 / 錯誤狀態，且要能在測試中替換。
+The cart is shared across pages (app bar badge, cart page, checkout page). Product data needs loading and error states, and must be replaceable in tests.
 
-## 決策
+## Decision
 
-使用 Riverpod 3：購物車用 `Notifier`，API 資料用 `FutureProvider`，件數與合計用衍生 `Provider`。
+Use Riverpod 3: a `Notifier` for the cart, `FutureProvider` for API data, and derived `Provider`s for item count and total.
 
-## 影響
+## Consequences
 
-- 載入 / 錯誤 / 資料三態由 `AsyncValue.when` 統一處理，重試只需 `ref.invalidate`
-- 測試可用 `ProviderScope` override 或 `ProviderContainer`，不需打真實 API
-- 相較 `setState` 多一層概念，但比 Bloc 樣板少
+- Loading / error / data states are handled uniformly with `AsyncValue.when`; retry is just `ref.invalidate`
+- Tests use `ProviderScope` overrides or a `ProviderContainer`, with no real API calls
+- One more concept than `setState`, but less boilerplate than Bloc

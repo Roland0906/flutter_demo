@@ -1,17 +1,17 @@
-# 0004. 不使用程式碼產生
+# 0004. No code generation
 
-- 狀態：採用
-- 日期：2026-10-09
+- Status: Accepted
+- Date: 2026-10-09
 
-## 背景
+## Context
 
-json_serializable、freezed、riverpod_generator 能減少樣板，但需要 build_runner 與產生檔。
+json_serializable, freezed, and riverpod_generator reduce boilerplate but require build_runner and generated files.
 
-## 決策
+## Decision
 
-目前規模小（1 個 model、少量 provider），手寫 `fromJson` 與 provider，不引入程式碼產生。
+At the current size (one model, a few providers), write `fromJson` and providers by hand and skip code generation.
 
-## 影響
+## Consequences
 
-- `flutter pub get` 後即可執行，沒有產生檔需要同步
-- Model 或 provider 數量明顯增加時，應重新評估此決策
+- The app runs right after `flutter pub get`, with no generated files to keep in sync
+- Revisit this decision if the number of models or providers grows significantly

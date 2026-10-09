@@ -1,17 +1,17 @@
-# 0002. 路由採用 go_router
+# 0002. Routing with go_router
 
-- 狀態：採用
-- 日期：2026-10-09
+- Status: Accepted
+- Date: 2026-10-09
 
-## 背景
+## Context
 
-流程為首頁 → 商品 → 購物車 → 結帳，商品頁需帶參數，且 App 也要能在 Web 上執行。
+The flow is home → product → cart → checkout. The product page takes a parameter, and the app should also run on the web.
 
-## 決策
+## Decision
 
-使用 go_router 宣告式路由，商品頁路徑為 `/product/:id`。頁面前進用 `push`（保留返回堆疊），回首頁用 `go('/')`（清空堆疊）。
+Use go_router with declarative routes; the product page lives at `/product/:id`. Forward navigation uses `push` (keeps the back stack); returning home uses `go('/')` (clears it).
 
-## 影響
+## Consequences
 
-- 路由集中定義在 `router.dart`，Web 網址與深層連結直接可用
-- 需區分 `push` 與 `go` 的語意，誤用會導致返回鍵行為錯誤
+- Routes are defined in one place (`router.dart`); web URLs and deep links work out of the box
+- `push` and `go` have different semantics; mixing them up breaks back-button behavior
