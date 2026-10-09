@@ -23,6 +23,7 @@ class _CheckoutPageState extends ConsumerState<CheckoutPage> {
     ref.read(cartProvider.notifier).clear();
     await showDialog<void>(
       context: context,
+      barrierDismissible: false,
       builder: (_) => AlertDialog(
         icon: const Icon(Icons.check_circle, color: Colors.green, size: 48),
         title: const Text('下單成功'),
@@ -68,11 +69,7 @@ class _CheckoutPageState extends ConsumerState<CheckoutPage> {
           ),
           const Divider(height: 32),
           Row(
-            children: [
-              const Text('付款方式'),
-              const Spacer(),
-              const Text('貨到付款'),
-            ],
+            children: [const Text('付款方式'), const Spacer(), const Text('貨到付款')],
           ),
           const SizedBox(height: 8),
           Row(
@@ -82,9 +79,9 @@ class _CheckoutPageState extends ConsumerState<CheckoutPage> {
               Text(
                 '\$${total.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -95,7 +92,9 @@ class _CheckoutPageState extends ConsumerState<CheckoutPage> {
           padding: const EdgeInsets.all(12),
           child: FilledButton(
             onPressed: (lines.isEmpty || _placing) ? null : _placeOrder,
-            style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(48),
+            ),
             child: _placing
                 ? const SizedBox(
                     height: 20,

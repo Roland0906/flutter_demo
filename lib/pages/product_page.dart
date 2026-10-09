@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../data/api.dart';
 import '../state/cart.dart';
 import '../widgets/cart_button.dart';
+import '../widgets/error_view.dart';
+import '../widgets/product_image.dart';
 
 /// Product detail with an "add to cart" action.
 class ProductPage extends ConsumerWidget {
@@ -15,13 +17,13 @@ class ProductPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final product = ref.watch(productProvider(id));
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('商品詳情'),
-        actions: const [CartButton()],
-      ),
+      appBar: AppBar(title: const Text('商品詳情'), actions: const [CartButton()]),
       body: product.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('載入失敗：$e')),
+        error: (e, _) => ErrorView(
+          message: '$e',
+          onRetry: () => ref.invalidate(productProvider(id)),
+        ),
         data: (p) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -30,7 +32,7 @@ class ProductPage extends ConsumerWidget {
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(24),
-                child: Image.network(p.image, fit: BoxFit.contain),
+                child: ProductImage(p.image, fit: BoxFit.contain),
               ),
             ),
             const SizedBox(height: 16),
@@ -48,9 +50,9 @@ class ProductPage extends ConsumerWidget {
             Text(
               '\$${p.price.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
             Text(p.description),
@@ -72,7 +74,7 @@ class ProductPage extends ConsumerWidget {
                       duration: const Duration(seconds: 1),
                       action: SnackBarAction(
                         label: '查看',
-                        onPressed: () => context.go('/cart'),
+                        onPressed: () => context.push('/cart'),
                       ),
                     ),
                   );
