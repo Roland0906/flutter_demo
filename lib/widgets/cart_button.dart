@@ -12,7 +12,7 @@ class CartButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(cartCountProvider);
     return IconButton(
-      onPressed: () => context.go('/cart'),
+      onPressed: () => context.push('/cart'),
       icon: Badge(
         isLabelVisible: count > 0,
         label: Text('$count'),

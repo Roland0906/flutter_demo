@@ -23,6 +23,7 @@ class _CheckoutPageState extends ConsumerState<CheckoutPage> {
     ref.read(cartProvider.notifier).clear();
     await showDialog<void>(
       context: context,
+      barrierDismissible: false,
       builder: (_) => AlertDialog(
         icon: const Icon(Icons.check_circle, color: Colors.green, size: 48),
         title: const Text('下單成功'),

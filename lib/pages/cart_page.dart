@@ -62,7 +62,7 @@ class CartPage extends ConsumerWidget {
                     ),
                     const Spacer(),
                     FilledButton(
-                      onPressed: () => context.go('/checkout'),
+                      onPressed: () => context.push('/checkout'),
                       style: FilledButton.styleFrom(
                         minimumSize: const Size(140, 48),
                       ),

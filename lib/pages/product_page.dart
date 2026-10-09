@@ -72,7 +72,7 @@ class ProductPage extends ConsumerWidget {
                       duration: const Duration(seconds: 1),
                       action: SnackBarAction(
                         label: '查看',
-                        onPressed: () => context.go('/cart'),
+                        onPressed: () => context.push('/cart'),
                       ),
                     ),
                   );
