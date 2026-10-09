@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../state/cart.dart';
+import '../widgets/product_image.dart';
 
 /// Cart: editable quantities, running total, and a checkout action.
 class CartPage extends ConsumerWidget {
@@ -25,7 +26,7 @@ class CartPage extends ConsumerWidget {
               itemBuilder: (context, i) {
                 final l = lines[i];
                 return ListTile(
-                  leading: Image.network(l.product.image, width: 48),
+                  leading: ProductImage(l.product.image, width: 48),
                   title: Text(
                     l.product.title,
                     maxLines: 2,

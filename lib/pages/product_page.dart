@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../data/api.dart';
 import '../state/cart.dart';
 import '../widgets/cart_button.dart';
+import '../widgets/error_view.dart';
+import '../widgets/product_image.dart';
 
 /// Product detail with an "add to cart" action.
 class ProductPage extends ConsumerWidget {
@@ -21,7 +23,10 @@ class ProductPage extends ConsumerWidget {
       ),
       body: product.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('載入失敗：$e')),
+        error: (e, _) => ErrorView(
+          message: '$e',
+          onRetry: () => ref.invalidate(productProvider(id)),
+        ),
         data: (p) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -30,7 +35,7 @@ class ProductPage extends ConsumerWidget {
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(24),
-                child: Image.network(p.image, fit: BoxFit.contain),
+                child: ProductImage(p.image, fit: BoxFit.contain),
               ),
             ),
             const SizedBox(height: 16),

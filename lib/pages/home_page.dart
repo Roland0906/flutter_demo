@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../data/api.dart';
 import '../models/product.dart';
 import '../widgets/cart_button.dart';
+import '../widgets/error_view.dart';
+import '../widgets/product_image.dart';
 
 /// Home: a responsive grid of products fetched from the REST API.
 class HomePage extends ConsumerWidget {
@@ -20,7 +22,7 @@ class HomePage extends ConsumerWidget {
       ),
       body: products.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => _ErrorView(
+        error: (e, _) => ErrorView(
           message: '$e',
           onRetry: () => ref.invalidate(productsProvider),
         ),
@@ -61,7 +63,7 @@ class _ProductCard extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(12),
-                child: Image.network(product.image, fit: BoxFit.contain),
+                child: ProductImage(product.image, fit: BoxFit.contain),
               ),
             ),
             Padding(
@@ -94,31 +96,6 @@ class _ProductCard extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.message, required this.onRetry});
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.wifi_off, size: 48),
-            const SizedBox(height: 12),
-            Text('載入失敗\n$message', textAlign: TextAlign.center),
-            const SizedBox(height: 12),
-            FilledButton(onPressed: onRetry, child: const Text('重試')),
           ],
         ),
       ),
